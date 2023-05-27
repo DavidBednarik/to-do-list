@@ -11,7 +11,7 @@ const AddTask = () => {
 	return (
 		<div>
 			<Button variant="outlined" fullWidth onClick={handleOpen}>
-				Add new item +
+				Add new task +
 			</Button>
 			<AddNewItem open={open} closeModal={handleClose} />
 		</div>
