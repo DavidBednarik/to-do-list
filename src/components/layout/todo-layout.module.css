@@ -1,0 +1,16 @@
+.container {
+	width: 100%;
+	max-width: 1000px;
+    padding-top: 100px;
+    margin: auto;
+}
+
+.title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.categoryContainer {
+    display: flex;
+}
