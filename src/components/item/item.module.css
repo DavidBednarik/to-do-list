@@ -1,0 +1,7 @@
+.cardContainer {
+    padding: 10px;
+    height: 200px;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow-y: auto;
+}
