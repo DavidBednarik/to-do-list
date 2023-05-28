@@ -1,9 +1,10 @@
 "use client";
+import { Category } from "@/models/category";
 import { Button } from "@mui/material";
 import React from "react";
-import AddNewItem from "./add-item-model";
+import AddNewItem from "./add-item-modal";
 
-const AddTask = () => {
+const AddTask = ({ categories }: { categories: Category[] }) => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -13,7 +14,11 @@ const AddTask = () => {
 			<Button variant="outlined" fullWidth onClick={handleOpen}>
 				Add new task +
 			</Button>
-			<AddNewItem open={open} closeModal={handleClose} />
+			<AddNewItem
+				open={open}
+				closeModal={handleClose}
+				categories={categories}
+			/>
 		</div>
 	);
 };
