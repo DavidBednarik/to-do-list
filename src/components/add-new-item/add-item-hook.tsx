@@ -1,8 +1,8 @@
 import { dataFetcher } from "@/get-json";
 import { useLoadData } from "@/use-data";
-import { useRouter } from "next/navigation";
 import { FormValues } from "./add-item-modal";
 import uuid from "react-uuid";
+import { Dayjs } from "dayjs";
 
 type response = {
 	message: string;
@@ -12,10 +12,7 @@ type response = {
 };
 
 const useAddItem = () => {
-	const router = useRouter();
-	const { loadData, data, loading, error } = useLoadData<
-		response | undefined
-	>();
+	const { loadData, data, loading } = useLoadData<response | undefined>();
 
 	const option = (body: string) => {
 		return {

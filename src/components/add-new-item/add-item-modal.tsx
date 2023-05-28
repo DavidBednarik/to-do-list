@@ -10,10 +10,6 @@ import {
 	Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Category } from "@/models/category";
@@ -21,6 +17,8 @@ import WarningMessage from "./warning-message";
 import { useAddItem } from "./add-item-hook";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useRouter } from "next/navigation";
+import DateAndTimePicker from "./date-time-picker";
+import LoadButton from "./loading-button";
 
 type ModalProps = {
 	open: boolean;
@@ -167,27 +165,8 @@ const AddNewItem = ({ open, closeModal, categories }: ModalProps) => {
 						{errors.category?.type === "required" && (
 							<WarningMessage field={"Category"} />
 						)}
-						<LocalizationProvider dateAdapter={AdapterDayjs}>
-							<DemoContainer components={["DateTimePicker"]}>
-								<DateTimePicker
-									label="Pick date and time"
-									ampm={false}
-									value={dateAndTime ?? null}
-									onChange={(newValue) => setDateAndTime(newValue)}
-								/>
-							</DemoContainer>
-						</LocalizationProvider>
-						<LoadingButton
-							style={{ marginTop: 10 }}
-							size="small"
-							id="my-form"
-							type="submit"
-							fullWidth
-							loading={loading}
-							variant="outlined"
-						>
-							<span>Add</span>
-						</LoadingButton>
+						<DateAndTimePicker value={dateAndTime} setValue={setDateAndTime} />
+						<LoadButton loading={loading} />
 					</Box>
 				</form>
 			</Modal>
