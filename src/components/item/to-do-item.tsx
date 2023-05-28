@@ -9,12 +9,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { Grid } from "@mui/material";
+import { formatDate, formatTime } from "./utils";
 
 const ToDoItem = ({
-	item: { title, description, id, category, complete },
+	item: { title, description, complete, deadline },
 }: {
 	item: Items;
 }) => {
+	const deadlineDate = formatDate(deadline);
+	const deadlineTime = formatTime(deadline);
 	return (
 		<Card className={styles.cardContainer}>
 			<CardContent style={{ minHeight: 100 }}>
@@ -24,18 +28,26 @@ const ToDoItem = ({
 				<Typography variant="body2" color="text.secondary">
 					{description}
 				</Typography>
-				<Typography>Date</Typography>
-				<Typography>Time</Typography>
+				<hr />
+				<Grid style={{ display: "flex", justifyContent: "space-between" }}>
+					<Typography>Date</Typography>
+					<Typography>{deadlineDate}</Typography>
+				</Grid>
+				<Grid style={{ display: "flex", justifyContent: "space-between" }}>
+					<Typography>Time</Typography>
+					<Typography>{deadlineTime}</Typography>
+				</Grid>
 				<FormControlLabel
 					value={complete}
 					control={<Checkbox checked={complete} />}
-					label="Mark as done"
+					label={complete ? "Done" : "Mark as done"}
 					labelPlacement="end"
 				/>
 			</CardContent>
 			<CardActions style={{ justifyContent: "space-between" }}>
-				<Button size="small">Remove</Button>
-				<Button size="small">Edit</Button>
+				<Button size="small" variant="outlined">
+					Remove
+				</Button>
 			</CardActions>
 		</Card>
 	);
