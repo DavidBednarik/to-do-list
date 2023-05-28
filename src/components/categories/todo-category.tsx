@@ -1,8 +1,8 @@
 "use client";
 import { AppContext } from "@/context/app-context";
-import Filter from "@/enums/filter";
 import { Category } from "@/models/category";
 import { Items } from "@/models/item";
+import { Skeleton } from "@mui/material";
 import React, { useContext } from "react";
 import { filterTasks } from "../filter/utils";
 import ToDoItem from "../item/to-do-item";
@@ -10,18 +10,31 @@ import { useGetItems } from "../item/use-get-items/use-get-items";
 import styles from "./categories.module.css";
 
 const TodoCategory = ({ category: { title } }: { category: Category }) => {
-	const { data } = useGetItems({ title });
+	const { data, loading, getItems } = useGetItems({ title });
 	const { selectedFilter } = useContext(AppContext);
 
-	const itemsData = filterTasks(selectedFilter, data)?.map((item: Items) => (
-		<ToDoItem item={item} key={item.id} />
-	));
+	const itemsData = filterTasks(selectedFilter, data)?.map(
+		(item: Items) =>
+			item.category === title && (
+				<ToDoItem item={item} key={item.id} getData={getItems} />
+			)
+	);
+
+	const displayData = loading ? (
+		<Skeleton
+			variant="rectangular"
+			height={200}
+			style={{ borderRadius: 5, marginTop: 5 }}
+		/>
+	) : (
+		itemsData
+	);
 
 	return (
 		<div className={styles.container}>
 			{title}
 			<hr />
-			<div className={styles.itemsContainer}>{itemsData}</div>
+			<div className={styles.itemsContainer}>{displayData}</div>
 		</div>
 	);
 };

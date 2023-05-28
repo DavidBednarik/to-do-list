@@ -18,6 +18,7 @@ import { useAddItem } from "./add-item-hook";
 import { useRouter } from "next/navigation";
 import DateAndTimePicker from "./date-time-picker";
 import LoadButton from "./loading-button";
+import { useGetItems } from "../use-get-items/use-get-items";
 
 type ModalProps = {
 	open: boolean;
@@ -68,6 +69,7 @@ const AddNewItemModal = ({ open, closeModal, categories }: ModalProps) => {
 		}
 		closeModal();
 		reset();
+
 		router.refresh();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addedItem]);
