@@ -43,7 +43,7 @@ export type FormValues = {
 	category: string;
 };
 
-const AddNewItem = ({ open, closeModal, categories }: ModalProps) => {
+const AddNewItemModal = ({ open, closeModal, categories }: ModalProps) => {
 	const router = useRouter();
 	const {
 		handleSubmit,
@@ -77,8 +77,6 @@ const AddNewItem = ({ open, closeModal, categories }: ModalProps) => {
 			await addItem(data, dateAndTime);
 		}
 	};
-
-	console.log("✅", dayjs(dateAndTime).format());
 
 	return (
 		<div>
@@ -173,4 +171,4 @@ const AddNewItem = ({ open, closeModal, categories }: ModalProps) => {
 	);
 };
 
-export default AddNewItem;
+export default AddNewItemModal;

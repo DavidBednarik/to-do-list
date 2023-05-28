@@ -1,6 +1,6 @@
 import { Category } from "@/models/category";
 import { getCategories } from "../../../api";
-import AddTask from "../item/add-new-item/add-new-item";
+import AddTask from "../item/add-new-item/add-task-main-component";
 import TodoCategory from "../categories/todo-category";
 import styles from "./todo-layout.module.css";
 
