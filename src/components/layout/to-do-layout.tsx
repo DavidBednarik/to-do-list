@@ -1,5 +1,6 @@
 import { Category } from "@/models/category";
 import { getCategories } from "../../../api";
+import AddTask from "../add-new-item/add-new-item";
 import TodoCategory from "../categories/todo-category";
 import styles from "./todo-layout.module.css";
 
@@ -17,6 +18,7 @@ const ToDoLayout = async () => {
 	return (
 		<div className={styles.container}>
 			<h3 className={styles.title}>To do list</h3>
+			<AddTask categories={categories} />
 			<div className={styles.categoryContainer}>{categoriesData}</div>
 		</div>
 	);
