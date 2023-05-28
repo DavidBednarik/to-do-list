@@ -13,14 +13,13 @@ import { formatDate, formatTime } from "./utils";
 import { useRemoveItem } from "./remove-item/remove-item-hook";
 import { useRouter } from "next/navigation";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useMarkTaskAsDone } from "./mark-task-as-done/use-mark-task-as-done";
 
-const ToDoItem = ({
-	item: { title, description, complete, deadline, id },
-}: {
-	item: Items;
-}) => {
+const ToDoItem = ({ item }: { item: Items }) => {
+	const { title, description, complete, deadline, id, category } = item;
 	const router = useRouter();
 	const { removeItem, loading } = useRemoveItem();
+	const { markTaskAsDone } = useMarkTaskAsDone();
 	const deadlineDate = formatDate(deadline);
 	const deadlineTime = formatTime(deadline);
 
@@ -30,6 +29,11 @@ const ToDoItem = ({
 	};
 
 	const checkboxLabel = complete ? "Done" : "Mark as done";
+
+	const handleChangeStatus = async () => {
+		await markTaskAsDone(item);
+		router.refresh();
+	};
 
 	return (
 		<Card className={styles.cardContainer}>
@@ -56,7 +60,9 @@ const ToDoItem = ({
 				</Grid>
 				<FormControlLabel
 					value={complete}
-					control={<Checkbox checked={complete} />}
+					control={
+						<Checkbox checked={complete} onChange={handleChangeStatus} />
+					}
 					label={checkboxLabel}
 					labelPlacement="end"
 				/>
