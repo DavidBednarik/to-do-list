@@ -1,7 +1,7 @@
 "use client";
 import { Items } from "@/models/item";
 import styles from "./item.module.css";
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -20,6 +20,7 @@ const ToDoItem = ({ item }: { item: Items }) => {
 	const router = useRouter();
 	const { removeItem, loading } = useRemoveItem();
 	const { markTaskAsDone } = useMarkTaskAsDone();
+	const [status, setStatus] = useState(complete);
 	const deadlineDate = formatDate(deadline);
 	const deadlineTime = formatTime(deadline);
 
@@ -28,17 +29,18 @@ const ToDoItem = ({ item }: { item: Items }) => {
 		router.refresh();
 	};
 
-	const checkboxLabel = complete ? "Done" : "Mark as done";
+	const checkboxLabel = status ? "Done" : "Mark as done";
 
 	const handleChangeStatus = async () => {
+		setStatus(!complete);
 		await markTaskAsDone(item);
 		router.refresh();
 	};
 
 	return (
 		<Card className={styles.cardContainer}>
-			<CardContent style={{ minHeight: 100 }}>
-				<Typography gutterBottom variant="h5" component="div">
+			<CardContent style={{ minHeight: 100, paddingBottom: 5 }}>
+				<Typography gutterBottom variant="h6" component="div">
 					{title}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
@@ -60,9 +62,7 @@ const ToDoItem = ({ item }: { item: Items }) => {
 				</Grid>
 				<FormControlLabel
 					value={complete}
-					control={
-						<Checkbox checked={complete} onChange={handleChangeStatus} />
-					}
+					control={<Checkbox checked={status} onChange={handleChangeStatus} />}
 					label={checkboxLabel}
 					labelPlacement="end"
 				/>
@@ -70,7 +70,6 @@ const ToDoItem = ({ item }: { item: Items }) => {
 			<CardActions style={{ justifyContent: "space-between" }}>
 				<LoadingButton
 					onClick={handleRemoveItem}
-					style={{ marginTop: 10 }}
 					size="small"
 					id="my-form"
 					loading={loading}
