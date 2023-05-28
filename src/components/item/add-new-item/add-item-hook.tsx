@@ -3,6 +3,7 @@ import { useLoadData } from "@/use-data";
 import { FormValues } from "./add-item-modal";
 import uuid from "react-uuid";
 import { Dayjs } from "dayjs";
+import Method from "@/enums/option-method";
 
 type response = {
 	message: string;
@@ -17,7 +18,7 @@ const useAddItem = () => {
 	const option = (body: string) => {
 		return {
 			cache: "no-store",
-			method: "POST",
+			method: Method.POST,
 			headers: { "content-type": "application/json" },
 			body: body,
 		};
