@@ -5,6 +5,7 @@ import { Items } from "@/models/item";
 import { Skeleton } from "@mui/material";
 import React, { useContext } from "react";
 import { filterTasks } from "../filter/utils";
+import AddTask from "../item/add-new-item/add-task-main-component";
 import ToDoItem from "../item/to-do-item";
 import { useGetItems } from "../item/use-get-items/use-get-items";
 import styles from "./categories.module.css";
@@ -35,6 +36,7 @@ const TodoCategory = ({ category: { title } }: { category: Category }) => {
 			{title}
 			<hr />
 			<div className={styles.itemsContainer}>{displayData}</div>
+			<AddTask categoryTitle={title} getData={getItems} />
 		</div>
 	);
 };

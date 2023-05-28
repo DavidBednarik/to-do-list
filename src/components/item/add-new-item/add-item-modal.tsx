@@ -12,18 +12,17 @@ import {
 import React, { useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Category } from "@/models/category";
 import WarningMessage from "./warning-message";
 import { useAddItem } from "./add-item-hook";
-import { useRouter } from "next/navigation";
+
 import DateAndTimePicker from "./date-time-picker";
 import LoadButton from "./loading-button";
-import { useGetItems } from "../use-get-items/use-get-items";
 
 type ModalProps = {
 	open: boolean;
 	closeModal: () => void;
-	categories: Category[];
+	categoryTitle: string;
+	getData: () => Promise<void>;
 };
 const style = {
 	position: "absolute" as "absolute",
@@ -41,11 +40,15 @@ const style = {
 export type FormValues = {
 	title: string;
 	description: string;
-	category: string;
+	categoryTitle: string;
 };
 
-const AddNewItemModal = ({ open, closeModal, categories }: ModalProps) => {
-	const router = useRouter();
+const AddNewItemModal = ({
+	open,
+	closeModal,
+	categoryTitle,
+	getData,
+}: ModalProps) => {
 	const {
 		handleSubmit,
 		reset,
@@ -55,7 +58,6 @@ const AddNewItemModal = ({ open, closeModal, categories }: ModalProps) => {
 		defaultValues: {
 			title: "",
 			description: "",
-			category: "",
 		},
 	});
 	const { addItem, loading, data: addedItem } = useAddItem();
@@ -67,16 +69,16 @@ const AddNewItemModal = ({ open, closeModal, categories }: ModalProps) => {
 		if (!addedItem) {
 			return;
 		}
+		getData();
 		closeModal();
 		reset();
 
-		router.refresh();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addedItem]);
 
 	const onSubmit: SubmitHandler<FormValues> = async (data) => {
 		if (data) {
-			await addItem(data, dateAndTime);
+			await addItem(data, dateAndTime, categoryTitle);
 		}
 	};
 
@@ -134,35 +136,6 @@ const AddNewItemModal = ({ open, closeModal, categories }: ModalProps) => {
 						/>
 						{errors.description?.type === "required" && (
 							<WarningMessage field={"Description"} />
-						)}
-						<Controller
-							name="category"
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<FormControl fullWidth>
-									<InputLabel id="select-category">Category</InputLabel>
-									<Select
-										style={{ marginBottom: 10 }}
-										fullWidth
-										labelId="category"
-										id="category"
-										defaultValue={"Shop"}
-										label="Category"
-										{...field}
-										variant="outlined"
-									>
-										{categories.map((menu) => (
-											<MenuItem value={menu.title} key={menu.id}>
-												{menu.title}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							)}
-						/>
-						{errors.category?.type === "required" && (
-							<WarningMessage field={"Category"} />
 						)}
 						<DateAndTimePicker value={dateAndTime} setValue={setDateAndTime} />
 						<LoadButton loading={loading} />

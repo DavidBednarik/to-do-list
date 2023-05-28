@@ -1,13 +1,18 @@
 "use client";
-import { Category } from "@/models/category";
 import { Button } from "@mui/material";
 import React from "react";
 import AddNewItemModal from "./add-item-modal";
+type AddToCategory = {
+	categoryTitle: string;
+	getData: () => Promise<void>;
+};
 
-const AddTask = ({ categories }: { categories: Category[] }) => {
+const AddTask = ({ categoryTitle, getData }: AddToCategory) => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	return (
 		<div>
@@ -17,7 +22,8 @@ const AddTask = ({ categories }: { categories: Category[] }) => {
 			<AddNewItemModal
 				open={open}
 				closeModal={handleClose}
-				categories={categories}
+				categoryTitle={categoryTitle}
+				getData={getData}
 			/>
 		</div>
 	);

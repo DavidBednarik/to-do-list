@@ -18,7 +18,7 @@ const ToDoLayout = async () => {
 	return (
 		<div className={styles.container}>
 			<h3 className={styles.title}>To do list</h3>
-			<AddTask categories={categories} />
+			{/* <AddTask categories={categories} /> */}
 			<Filter />
 			<div className={styles.categoryContainer}>{categoriesData}</div>
 		</div>
