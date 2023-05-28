@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import SupportedDateFormats from "./supported-formats";
+import SupportedDateFormats from "../../enums/supported-formats";
 
 export const formatDate = (deadline: string) => {
 	return dayjs(deadline).format(SupportedDateFormats.DATE);
