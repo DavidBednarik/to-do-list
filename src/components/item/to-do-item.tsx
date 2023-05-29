@@ -14,13 +14,13 @@ import { useRemoveItem } from "./remove-item/remove-item-hook";
 import { useRouter } from "next/navigation";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useMarkTaskAsDone } from "./mark-task-as-done/use-mark-task-as-done";
+import { useQueryClient } from "react-query";
 
 type ToDo = {
 	item: Items;
-	getData: () => Promise<void>;
 };
 
-const ToDoItem = ({ item, getData }: ToDo) => {
+const ToDoItem = ({ item }: ToDo) => {
 	const { title, description, complete, deadline, id, category } = item;
 	const router = useRouter();
 	const { removeItem, loading } = useRemoveItem();
@@ -29,10 +29,12 @@ const ToDoItem = ({ item, getData }: ToDo) => {
 	const deadlineDate = formatDate(deadline);
 	const deadlineTime = formatTime(deadline);
 
+	const queryClient = useQueryClient();
+
 	const handleRemoveItem = async () => {
 		await removeItem(id);
 		router.refresh();
-		getData();
+		queryClient.invalidateQueries(category);
 	};
 
 	const checkboxLabel = status ? "Done" : "Mark as done";
@@ -40,7 +42,7 @@ const ToDoItem = ({ item, getData }: ToDo) => {
 	const handleChangeStatus = async () => {
 		setStatus(!complete);
 		await markTaskAsDone(item);
-		getData();
+		queryClient.invalidateQueries(category);
 	};
 
 	return (
