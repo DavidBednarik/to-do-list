@@ -1,20 +1,10 @@
 "use client";
-import {
-	Box,
-	FormControl,
-	InputLabel,
-	MenuItem,
-	Modal,
-	Select,
-	TextField,
-	Typography,
-} from "@mui/material";
+import { Box, Modal, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import WarningMessage from "./warning-message";
 import { useAddItem } from "./add-item-hook";
-
 import DateAndTimePicker from "./date-time-picker";
 import LoadButton from "./loading-button";
 
@@ -62,7 +52,7 @@ const AddNewItemModal = ({
 	});
 	const { addItem, loading, data: addedItem } = useAddItem();
 	const [dateAndTime, setDateAndTime] = React.useState<Dayjs | null>(
-		dayjs("2022-04-17T15:30")
+		dayjs(new Date())
 	);
 
 	useEffect(() => {
@@ -72,7 +62,6 @@ const AddNewItemModal = ({
 		getData();
 		closeModal();
 		reset();
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addedItem]);
 
@@ -83,66 +72,63 @@ const AddNewItemModal = ({
 	};
 
 	return (
-		<div>
-			<Modal
-				open={open}
-				onClose={closeModal}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
-			>
-				<form onSubmit={handleSubmit(onSubmit)} id="my-form">
-					<Box sx={style}>
-						<Typography
-							id="modal-modal-title"
-							variant="h6"
-							component="h2"
-							style={{ textAlign: "center", marginBottom: 20 }}
-						>
-							Add new task
-						</Typography>
-
-						<Controller
-							name="title"
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<TextField
-									style={{ marginBottom: 10 }}
-									id="title"
-									label="Title"
-									variant="outlined"
-									fullWidth
-									{...field}
-								/>
-							)}
-						/>
-						{errors.title?.type === "required" && (
-							<WarningMessage field={"Title"} />
+		<Modal
+			open={open}
+			onClose={closeModal}
+			aria-labelledby="modal-modal-title"
+			aria-describedby="modal-modal-description"
+		>
+			<form onSubmit={handleSubmit(onSubmit)} id="my-form">
+				<Box sx={style}>
+					<Typography
+						id="modal-modal-title"
+						variant="h6"
+						component="h2"
+						style={{ textAlign: "center", marginBottom: 20 }}
+					>
+						Add new task
+					</Typography>
+					<Controller
+						name="title"
+						control={control}
+						rules={{ required: true }}
+						render={({ field }) => (
+							<TextField
+								style={{ marginBottom: 10 }}
+								id="title"
+								label="Title"
+								variant="outlined"
+								fullWidth
+								{...field}
+							/>
 						)}
-						<Controller
-							name="description"
-							control={control}
-							rules={{ required: true }}
-							render={({ field }) => (
-								<TextField
-									style={{ marginBottom: 10 }}
-									id="description"
-									label="Description"
-									variant="outlined"
-									fullWidth
-									{...field}
-								/>
-							)}
-						/>
-						{errors.description?.type === "required" && (
-							<WarningMessage field={"Description"} />
+					/>
+					{errors.title?.type === "required" && (
+						<WarningMessage field={"Title"} />
+					)}
+					<Controller
+						name="description"
+						control={control}
+						rules={{ required: true }}
+						render={({ field }) => (
+							<TextField
+								style={{ marginBottom: 10 }}
+								id="description"
+								label="Description"
+								variant="outlined"
+								fullWidth
+								{...field}
+							/>
 						)}
-						<DateAndTimePicker value={dateAndTime} setValue={setDateAndTime} />
-						<LoadButton loading={loading} />
-					</Box>
-				</form>
-			</Modal>
-		</div>
+					/>
+					{errors.description?.type === "required" && (
+						<WarningMessage field={"Description"} />
+					)}
+					<DateAndTimePicker value={dateAndTime} setValue={setDateAndTime} />
+					<LoadButton loading={loading} />
+				</Box>
+			</form>
+		</Modal>
 	);
 };
 

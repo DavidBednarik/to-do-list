@@ -3,6 +3,7 @@
 	max-width: 1000px;
     padding-top: 100px;
     margin: auto;
+    overflow-x: auto;
 }
 
 .title {
@@ -13,4 +14,6 @@
 
 .categoryContainer {
     display: flex;
+    border: 1px solid rgb(216, 222, 228);
+    border-radius: 5px;
 }

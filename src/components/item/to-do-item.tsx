@@ -45,8 +45,8 @@ const ToDoItem = ({ item, getData }: ToDo) => {
 
 	return (
 		<Card className={styles.cardContainer}>
-			<CardContent style={{ minHeight: 100, paddingBottom: 5 }}>
-				<Typography gutterBottom variant="h6" component="div">
+			<CardContent style={{ minHeight: 100, padding: 5 }}>
+				<Typography gutterBottom variant="h6" component="div" fontSize={"18px"}>
 					{title}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
@@ -59,17 +59,19 @@ const ToDoItem = ({ item, getData }: ToDo) => {
 						justifyContent: "space-between",
 					}}
 				>
-					<Typography>Date</Typography>
-					<Typography>{deadlineDate}</Typography>
+					<Typography style={{ fontSize: 14 }}>Date:</Typography>
+					<Typography style={{ fontSize: 14 }}>{deadlineDate}</Typography>
 				</Grid>
 				<Grid style={{ display: "flex", justifyContent: "space-between" }}>
-					<Typography>Time</Typography>
-					<Typography>{deadlineTime}</Typography>
+					<Typography style={{ fontSize: 14 }}>Time:</Typography>
+					<Typography style={{ fontSize: 14 }}>{deadlineTime}</Typography>
 				</Grid>
 				<FormControlLabel
 					value={complete}
 					control={<Checkbox checked={status} onChange={handleChangeStatus} />}
-					label={checkboxLabel}
+					label={
+						<Typography style={{ fontSize: 14 }}>{checkboxLabel}</Typography>
+					}
 					labelPlacement="end"
 				/>
 			</CardContent>

@@ -2,7 +2,7 @@
 import { AppContext } from "@/context/app-context";
 import { Category } from "@/models/category";
 import { Items } from "@/models/item";
-import { Skeleton } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { filterTasks } from "../filter/utils";
 import AddTask from "../item/add-new-item/add-task-main-component";
@@ -33,8 +33,13 @@ const TodoCategory = ({ category: { title } }: { category: Category }) => {
 
 	return (
 		<div className={styles.container}>
-			{title}
-			<hr />
+			<Typography className={styles.title}>
+				{title}
+				<span style={{ fontWeight: 400, marginLeft: 5 }}>
+					({filterTasks(selectedFilter, data)?.length ?? 0})
+				</span>
+			</Typography>
+
 			<div className={styles.itemsContainer}>{displayData}</div>
 			<AddTask categoryTitle={title} getData={getItems} />
 		</div>

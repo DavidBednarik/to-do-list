@@ -16,7 +16,12 @@ const AddTask = ({ categoryTitle, getData }: AddToCategory) => {
 
 	return (
 		<div>
-			<Button variant="outlined" fullWidth onClick={handleOpen}>
+			<Button
+				variant="outlined"
+				fullWidth
+				onClick={handleOpen}
+				style={{ backgroundColor: "white" }}
+			>
 				Add new task +
 			</Button>
 			<AddNewItemModal

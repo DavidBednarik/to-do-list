@@ -5,6 +5,7 @@ import uuid from "react-uuid";
 import { Dayjs } from "dayjs";
 import Method from "@/enums/option-method";
 import { Items } from "@/models/item";
+import { itemsAPI } from "@/endpoints/endpoints";
 
 const useAddItem = () => {
 	const { loadData, data, loading } = useLoadData<Items>();
@@ -23,7 +24,7 @@ const useAddItem = () => {
 		dateTime: Dayjs | null,
 		categoryTitle: string
 	) => {
-		const url = "https://647069d53de51400f72435a1.mockapi.io/items";
+		const url = itemsAPI;
 		const body = JSON.stringify({
 			id: uuid(),
 			title: data.title,
