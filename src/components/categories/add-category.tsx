@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { Button } from "@mui/material";
+import style from "./categories.module.css";
 
 const AddCategory = () => {
 	return (
-		<div style={{ padding: 10 }}>
-			<Button variant="outlined" style={{ backgroundColor: "white" }}>
+		<div>
+			<Button variant="outlined" className={style.buttonAdd}>
 				Add section +
 			</Button>
 		</div>
