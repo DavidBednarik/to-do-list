@@ -1,3 +1,4 @@
+import { removeItemsAPI } from "@/endpoints/endpoints";
 import Method from "@/enums/option-method";
 import { dataFetcher } from "@/get-json";
 import { useLoadData } from "@/use-data";
@@ -21,8 +22,7 @@ const useRemoveItem = () => {
 	};
 
 	const removeItem = async (id: string) => {
-		const url = `https://647069d53de51400f72435a1.mockapi.io/items/${id}`;
-
+		const url = removeItemsAPI(id);
 		await loadData(() => dataFetcher(url, option()));
 	};
 

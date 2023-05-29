@@ -1,26 +1,25 @@
+"use client";
 import { Category } from "@/models/category";
-import { getCategories } from "../../../api";
-import AddTask from "../item/add-new-item/add-task-main-component";
 import TodoCategory from "../categories/todo-category";
 import styles from "./todo-layout.module.css";
 import Filter from "../filter/filter";
+import AddCategory from "../categories/add-category";
+import { useGetCategories } from "../categories/use-get-categories";
 
-const ToDoLayout = async () => {
-	const categories: Category[] = await getCategories();
+const ToDoLayout = () => {
+	const { data: categories } = useGetCategories();
 
-	const categoriesData = categories.map((category: Category) => (
-		// eslint-disable-next-line react/jsx-key
-		<div>
-			<TodoCategory category={category} key={category.id} />
-		</div>
+	const categoriesData = categories?.map((category: Category) => (
+		<TodoCategory category={category} key={category.id} />
 	));
 
 	return (
 		<div className={styles.container}>
 			<h3 className={styles.title}>To do list</h3>
-			<AddTask categories={categories} />
 			<Filter />
-			<div className={styles.categoryContainer}>{categoriesData}</div>
+			<div className={styles.categoryContainer}>
+				{categoriesData} <AddCategory />
+			</div>
 		</div>
 	);
 };

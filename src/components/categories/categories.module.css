@@ -1,11 +1,21 @@
 .container {
-    padding: 10px;
     min-width: 300px;
+    background-color: #F9F8F8;
+    border: 1px solid rgb(216, 222, 228);
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.title {
+    padding: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
 }
 
 .itemsContainer {
     max-width: 300px;
     padding: 10px;
-    max-height: 500px;
+    height: 500px;
     overflow-y: auto;
 }

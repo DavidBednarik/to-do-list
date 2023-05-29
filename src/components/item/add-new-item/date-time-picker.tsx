@@ -11,6 +11,8 @@ type DateTimePickerProps = {
 };
 
 const DateAndTimePicker = ({ value, setValue }: DateTimePickerProps) => {
+	const minDate = dayjs(new Date());
+
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<DemoContainer components={["DateTimePicker"]}>

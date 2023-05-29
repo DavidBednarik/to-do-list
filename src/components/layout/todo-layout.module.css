@@ -1,16 +1,19 @@
 .container {
 	width: 100%;
-	max-width: 1000px;
+	max-width: 1200px;
     padding-top: 100px;
     margin: auto;
+    overflow-x: auto;
 }
 
 .title {
     text-align: center;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 .categoryContainer {
     display: flex;
+    border: 1px solid rgb(216, 222, 228);
+    border-radius: 5px;
 }

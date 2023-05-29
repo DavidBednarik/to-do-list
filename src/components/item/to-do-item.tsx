@@ -15,7 +15,12 @@ import { useRouter } from "next/navigation";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useMarkTaskAsDone } from "./mark-task-as-done/use-mark-task-as-done";
 
-const ToDoItem = ({ item }: { item: Items }) => {
+type ToDo = {
+	item: Items;
+	getData: () => Promise<void>;
+};
+
+const ToDoItem = ({ item, getData }: ToDo) => {
 	const { title, description, complete, deadline, id, category } = item;
 	const router = useRouter();
 	const { removeItem, loading } = useRemoveItem();
@@ -27,6 +32,7 @@ const ToDoItem = ({ item }: { item: Items }) => {
 	const handleRemoveItem = async () => {
 		await removeItem(id);
 		router.refresh();
+		getData();
 	};
 
 	const checkboxLabel = status ? "Done" : "Mark as done";
@@ -34,13 +40,13 @@ const ToDoItem = ({ item }: { item: Items }) => {
 	const handleChangeStatus = async () => {
 		setStatus(!complete);
 		await markTaskAsDone(item);
-		router.refresh();
+		getData();
 	};
 
 	return (
 		<Card className={styles.cardContainer}>
-			<CardContent style={{ minHeight: 100, paddingBottom: 5 }}>
-				<Typography gutterBottom variant="h6" component="div">
+			<CardContent style={{ minHeight: 100, padding: 5 }}>
+				<Typography gutterBottom variant="h6" component="div" fontSize={"18px"}>
 					{title}
 				</Typography>
 				<Typography variant="body2" color="text.secondary">
@@ -53,17 +59,19 @@ const ToDoItem = ({ item }: { item: Items }) => {
 						justifyContent: "space-between",
 					}}
 				>
-					<Typography>Date</Typography>
-					<Typography>{deadlineDate}</Typography>
+					<Typography style={{ fontSize: 14 }}>Date:</Typography>
+					<Typography style={{ fontSize: 14 }}>{deadlineDate}</Typography>
 				</Grid>
 				<Grid style={{ display: "flex", justifyContent: "space-between" }}>
-					<Typography>Time</Typography>
-					<Typography>{deadlineTime}</Typography>
+					<Typography style={{ fontSize: 14 }}>Time:</Typography>
+					<Typography style={{ fontSize: 14 }}>{deadlineTime}</Typography>
 				</Grid>
 				<FormControlLabel
 					value={complete}
 					control={<Checkbox checked={status} onChange={handleChangeStatus} />}
-					label={checkboxLabel}
+					label={
+						<Typography style={{ fontSize: 14 }}>{checkboxLabel}</Typography>
+					}
 					labelPlacement="end"
 				/>
 			</CardContent>
