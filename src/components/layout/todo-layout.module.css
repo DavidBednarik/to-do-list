@@ -1,6 +1,6 @@
 .container {
 	width: 100%;
-	max-width: 1000px;
+	max-width: 1200px;
     padding-top: 100px;
     margin: auto;
     overflow-x: auto;
@@ -9,7 +9,7 @@
 .title {
     text-align: center;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 .categoryContainer {
