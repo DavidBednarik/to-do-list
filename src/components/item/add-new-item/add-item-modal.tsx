@@ -10,12 +10,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
 import WarningMessage from "./warning-message";
 import { style } from "./modal-style";
+import { useQueryClient } from "react-query";
 
 type ModalProps = {
 	open: boolean;
 	closeModal: () => void;
 	categoryTitle: string;
-	getData: () => Promise<void>;
 };
 
 export type FormValues = {
@@ -24,12 +24,7 @@ export type FormValues = {
 	categoryTitle: string;
 };
 
-const AddNewItemModal = ({
-	open,
-	closeModal,
-	categoryTitle,
-	getData,
-}: ModalProps) => {
+const AddNewItemModal = ({ open, closeModal, categoryTitle }: ModalProps) => {
 	const {
 		handleSubmit,
 		reset,
@@ -47,12 +42,13 @@ const AddNewItemModal = ({
 	const [dateAndTime, setDateAndTime] = React.useState<Dayjs | null>(
 		dayjs(new Date())
 	);
+	const queryClient = useQueryClient();
 
 	useEffect(() => {
 		if (!addedItem) {
 			return;
 		}
-		getData();
+		queryClient.invalidateQueries(categoryTitle);
 		closeModal();
 		reset();
 		// eslint-disable-next-line react-hooks/exhaustive-deps

@@ -4,10 +4,9 @@ import React from "react";
 import AddNewItemModal from "./add-item-modal";
 type AddToCategory = {
 	categoryTitle: string;
-	getData: () => Promise<void>;
 };
 
-const AddTask = ({ categoryTitle, getData }: AddToCategory) => {
+const AddTask = ({ categoryTitle }: AddToCategory) => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => {
@@ -28,7 +27,6 @@ const AddTask = ({ categoryTitle, getData }: AddToCategory) => {
 				open={open}
 				closeModal={handleClose}
 				categoryTitle={categoryTitle}
-				getData={getData}
 			/>
 		</div>
 	);
