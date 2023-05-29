@@ -13,6 +13,11 @@
     display: flex;
 }
 
+.counter {
+    font-weight: 400;
+    margin-left: 5px;
+}
+
 .itemsContainer {
     max-width: 300px;
     padding: 10px;

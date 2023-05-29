@@ -13,3 +13,7 @@ export const getItemsAccordingCategory = (title: string) => {
 export const removeItemsAPI = (id: string) => {
 	return `${BASE_URL}/${Endpoint.ITEMS}/${id}`;
 };
+
+export const markTaskAsDoneApi = (id: string) => {
+	return `${BASE_URL}/${Endpoint.ITEMS}/${id}`;
+};
