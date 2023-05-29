@@ -11,7 +11,6 @@ import { schema } from "./schema";
 import WarningMessage from "./warning-message";
 import { style } from "./modal-style";
 import { useQueryClient } from "react-query";
-import { ITEMS_KEY } from "@/api/use-items";
 
 type ModalProps = {
 	open: boolean;
