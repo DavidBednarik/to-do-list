@@ -3,28 +3,19 @@ import { Box, Modal, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import WarningMessage from "./warning-message";
 import { useAddItem } from "./add-item-hook";
 import DateAndTimePicker from "./date-time-picker";
 import LoadButton from "./loading-button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./schema";
+import WarningMessage from "./warning-message";
+import { style } from "./modal-style";
 
 type ModalProps = {
 	open: boolean;
 	closeModal: () => void;
 	categoryTitle: string;
 	getData: () => Promise<void>;
-};
-const style = {
-	position: "absolute" as "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: 400,
-	bgcolor: "background.paper",
-	border: "1px solid grey",
-	borderRadius: 3,
-	boxShadow: 24,
-	p: 4,
 };
 
 export type FormValues = {
@@ -44,11 +35,13 @@ const AddNewItemModal = ({
 		reset,
 		control,
 		formState: { errors },
+		register,
 	} = useForm<FormValues>({
 		defaultValues: {
 			title: "",
 			description: "",
 		},
+		resolver: yupResolver(schema),
 	});
 	const { addItem, loading, data: addedItem } = useAddItem();
 	const [dateAndTime, setDateAndTime] = React.useState<Dayjs | null>(
@@ -94,6 +87,7 @@ const AddNewItemModal = ({
 						rules={{ required: true }}
 						render={({ field }) => (
 							<TextField
+								{...register("title")}
 								style={{ marginBottom: 10 }}
 								id="title"
 								label="Title"
@@ -103,9 +97,7 @@ const AddNewItemModal = ({
 							/>
 						)}
 					/>
-					{errors.title?.type === "required" && (
-						<WarningMessage field={"Title"} />
-					)}
+					<WarningMessage field={errors.title?.message} />
 					<Controller
 						name="description"
 						control={control}
@@ -113,6 +105,7 @@ const AddNewItemModal = ({
 						render={({ field }) => (
 							<TextField
 								style={{ marginBottom: 10 }}
+								{...register("description")}
 								id="description"
 								label="Description"
 								variant="outlined"
@@ -121,9 +114,7 @@ const AddNewItemModal = ({
 							/>
 						)}
 					/>
-					{errors.description?.type === "required" && (
-						<WarningMessage field={"Description"} />
-					)}
+					<WarningMessage field={errors.description?.message} />
 					<DateAndTimePicker value={dateAndTime} setValue={setDateAndTime} />
 					<LoadButton loading={loading} />
 				</Box>
