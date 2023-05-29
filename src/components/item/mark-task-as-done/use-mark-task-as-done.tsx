@@ -1,3 +1,4 @@
+import { markTaskAsDoneApi } from "@/endpoints/endpoints";
 import Method from "@/enums/option-method";
 import { dataFetcher } from "@/get-json";
 import { Items } from "@/models/item";
@@ -32,7 +33,7 @@ const useMarkTaskAsDone = () => {
 			deadline: deadline,
 			complete: !complete,
 		});
-		const url = `https://647069d53de51400f72435a1.mockapi.io/items/${id}`;
+		const url = markTaskAsDoneApi(id);
 
 		await loadData(() => dataFetcher(url, option(body)));
 	};

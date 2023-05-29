@@ -35,11 +35,10 @@ const TodoCategory = ({ category: { title } }: { category: Category }) => {
 		<div className={styles.container}>
 			<Typography className={styles.title}>
 				{title}
-				<span style={{ fontWeight: 400, marginLeft: 5 }}>
+				<span className={styles.counter}>
 					({filterTasks(selectedFilter, data)?.length ?? 0})
 				</span>
 			</Typography>
-
 			<div className={styles.itemsContainer}>{displayData}</div>
 			<AddTask categoryTitle={title} getData={getItems} />
 		</div>
